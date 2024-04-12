@@ -39,13 +39,12 @@ def decrypt(message, key):
 decryption = decrypt(text, custom_key)
 encryption = encrypt(text, custom_key)
 #print(f'\nDecrypted/Encrypted Text: {decryption}\n')
-if encryption:
+if encryption or decryption:
     print(f'\nOriginal Text: {text}')
-    print(f'Key: {custom_key}')
-    print(f'Encrypted Text: {decryption}')
-elif decryption:
-    print(f'\nOriginal Text: {text}')
-    print(f'Key: {custom_key}')
-    print(f'Decrypted Text: {encryption}')
+    print(f'Key: {custom_key}') 
+    if encryption:
+        print(f'Decrypted Text: {decryption}')
+    else:
+        print(f'Encrypted Text: {encryption}')
 else:
     print('Something went wrong...\nPlease try again. :(')

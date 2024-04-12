@@ -20,10 +20,14 @@ def convert_to_snake_case(pascal_or_camel_cased_string):
     return ''.join(snake_cased_char_list).strip('_')
 
 def main():
-    ask_for_input = input('Please Enter Your Own camelCased or PascalCased String: ')
-    user_input = str(ask_for_input)
-    print(f'User Input: {user_input} \nConverted: ',convert_to_snake_case(user_input))
-
+    while True:
+        ask_for_input = input('Please Enter Your Own camelCased or PascalCased String. \nOr Type "Exit" to Exit: ')
+        user_input = str(ask_for_input)
+        if user_input == 'Exit':
+            break
+        else:
+            print(f'User Input: {user_input} \nConverted: ',convert_to_snake_case(user_input))
+    
 if __name__ == '__main__':
     print('****convert_to_snake_case****')
     example = 'aLongAndComplexString'
