@@ -8,7 +8,7 @@ import random
 import re
 
 NUM_DIGITS = 4 # Number of digits in the number to guess, can change later
-MAX_GUESSES = 15 # Number of guesses allowed, can change later
+MAX_GUESSES = 20 # Number of guesses allowed, can change later
 
 def main():
     print('''Bagels Game, a game of deductive logic.
