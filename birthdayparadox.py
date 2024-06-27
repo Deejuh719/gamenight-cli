@@ -42,9 +42,9 @@ print('''Birthday Paradox, by Al Sweigart
 MONTHS = ('January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December')
 
 while True: # Keep asking until the user enters a valid amount.
-    print('How many birthdays should I generate? (Max 500)')
+    print('How many birthdays should I generate? (Max 100)')
     response = input('> ')
-    if response.isdecimal() and (0 < int(response) <= 500):
+    if response.isdecimal() and (0 < int(response) <= 100):
         numBDays = int(response)
         break # User has entered a valid amount.
     print('Please enter a number between 1 and 100.')
@@ -75,7 +75,7 @@ print('In this simulation, ', end='')
 if match != None:
     monthName = MONTHS[match.month - 1]
     dateText = '{} {}'.format(monthName, match.day)
-    print(match_count, 'other person has a birthday on', dateText)
+    print('at least', match_count, 'other person has a birthday on', dateText)
 else:
     print('there are no matching birthdays.')
 print()
@@ -96,7 +96,7 @@ print('100,000 simulations run.')
 print()
 
 # Display simulation results:
-probability = round(simMatch / 100_000 * 500, 2)
+probability = round(simMatch / 100_000 * 100, 2)
 print('Out of 100,000 simulations of', numBDays, 'people, there was a')
 print('matching birthday in that group', simMatch, 'times. This means')
 print('that', numBDays, 'people have a ', probability, '% chance of')
