@@ -12,7 +12,7 @@
 
 ### Bagels Game (06.26.2024)
 1. This game is based on the code featured in the book "The Big Book of Small Python Projects".
-2. It's base code is available here https://nostarch.com/big-book-small-python-programming
+2. It's base code is available [here](https://inventwithpython.com/bigbookpython/project1.html)
 3. Alterations include:
    - Instead of printing out "Pico" "Fermi" and "Bagels" it will print P, F, B and is noted in the instructions
    - Included letters for a hexadecimal code option
@@ -23,7 +23,7 @@
 
 ### Birthday Paradox (06.27.2024)
 1. This game is based on the code featured in the book "The Big Book of Small Python Projects".
-2. It's base code is available here https://nostarch.com/big-book-small-python-programming
+2. It's base code is available [here](https://inventwithpython.com/bigbookpython/project2.html)
 3. Alterations include:
    - Lines 99-112, allowing for multiple response options to print based on probability
    - Added match_count on lines 66, 70-71 for if a match in the birthday sim occurs
@@ -33,6 +33,6 @@
 
 ### Vigenere Cipher (But Better) (06.27.2024)
 1. Fully functional cipher that actually encrypts and decrypts based on user input
-2. From "The Big Book of Small Python Projects", base code on [here](https://inventwithpython.com/bigbookpython/project80.html)
+2. From "The Big Book of Small Python Projects", base code [here](https://inventwithpython.com/bigbookpython/project80.html)
 3. Only thing I changed about this code was the title/intro to the cipher
 4. Will use as an example to edit the first cipher from FreeCodeCamp
