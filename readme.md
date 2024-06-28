@@ -33,6 +33,6 @@
 
 ### Vigenere Cipher (But Better) (06.27.2024)
 1. Fully functional cipher that actually encrypts and decrypts based on user input
-2. From "The Big Book of Small Python Projects", base code on https://nostarch.com/big-book-small-python-programming
+2. From "The Big Book of Small Python Projects", base code on [here](https://inventwithpython.com/bigbookpython/project80.html)
 3. Only thing I changed about this code was the title/intro to the cipher
 4. Will use as an example to edit the first cipher from FreeCodeCamp
