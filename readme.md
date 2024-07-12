@@ -1,5 +1,7 @@
 ### Vigenere Cipher (04.2024)
 
+#### (named vignere_cypher.py)
+
 1. A program to learn string manipulation from [FreeCodeCamp](https://www.freecodecamp.org/learn/scientific-computing-with-python/learn-list-comprehension-by-building-a-vigenere-cipher/step-1)
 2. Takes a string and a key and returns a string of the encrypted text or vice versa
 3. Cipher is currently buggy and will play with it to allow user input as well as encryption/decryption correctly in both directions (04.12.2024)
@@ -36,6 +38,8 @@
 4. Was going to alter the amount of birthdays that can be matched or the amount of times the simulation is run, but that caused extreme latency on the runtime
 
 ### Vigenere Cipher (But Better) (06.27.2024)
+
+#### (named vignerecipher.py)
 
 1. Fully functional cipher that actually encrypts and decrypts based on user input
 2. From "The Big Book of Small Python Projects", base code [here](https://inventwithpython.com/bigbookpython/project80.html)
