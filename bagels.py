@@ -39,7 +39,7 @@ def main():
             if not re.match(r'^[A-Fa-f0-9]$'.format(NUM_DIGITS), guess):
                 print('Guess #{}:'.format(numGuesses))
                 guess = input('> ')
-
+            # Check if they want to quit
             if guess.lower() == 'quit':
                 print('Quitting game... See ya around.')
                 return
