@@ -3,13 +3,12 @@ import random
 def main():
     print("****Hello, I am the ~~Magic 8 Ball~~")
     print("Ask me anything and I'll show you your future!****")
-    print("\n")
     print("Type 'quit' to exit the game.")
-    print("Magic 8 Ball: Created by K Surratt found on https://github.com/deejuh719")
     print("\n")
     
     while True: # Main game loop
         print("Focus and ask your question to the Magic 8 Ball.")
+        print("Just don't shake me though, I am still your computer...")
 
         # Question is user input
         question = input('> ')
@@ -20,6 +19,9 @@ def main():
         # If user types quit, exit the game
         if question.lower() == "quit":
             print('Thank you for consulting the Magic 8 Ball, goodbye!')
+            print("\n")
+            print("Magic 8 Ball: Created by K Surratt found on https://github.com/deejuh719")
+            print("\n")
             break  # Break out of the while loop
 
         # Use if statements to print answer based on number generated
