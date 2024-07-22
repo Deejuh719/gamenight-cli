@@ -4,6 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Kalam:wght@300;400;700&family=WindSong:wght@400;500&display=swap"
+        rel="stylesheet">
     <link rel="stylesheet" href="https://pyscript.net/latest/pyscript.css" />
     <script defer src="https://pyscript.net/latest/pyscript.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/beercss@3.6.8/dist/cdn/beer.min.css" rel="stylesheet">
@@ -15,11 +19,16 @@
         body{
             display: flex;
         }
-
+        h1{
+            font-family: "WindSong", cursive;
+            font-weight: 800;
+        }
         #descript{
             margin-bottom: 20%;
+            font-family: "Kalam", cursive;
+            font-size: large;
+            font-weight: 400;
         }
-
         #ball{
             display: block;
             margin: auto;
@@ -80,10 +89,12 @@
             width: 80%;
             font-size: large;
             font-weight: bold;
+            color: azure;
         }
         #answer{
             margin-left: 15%;
             margin-top: 5%;
+            color: azure;
             font-weight: bold;
             height: 100%;
             width: 100%;
@@ -105,8 +116,8 @@
     <py-script>
         import numpy as np
     </py-script>
-    <div class="absolute top center center-align">
-        <p>Magic 8 Ball</p>
+    <div class="fixed top center center-align">
+        <h1>Magic 8 Ball</h1>
         <p id="descript">Ask your question, click "Ask" and the 8 Ball will give you your result</p>
     </div>
     <div class="fixed center middle center-align middle-align" id="ball">

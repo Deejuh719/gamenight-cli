@@ -52,3 +52,10 @@
 2. Utilizes the random.randint() method to generate a random number between 1 and 20 correlating to the orignal 20 responses of a magic 8 ball
 3. Requires user input for a question and prints out a random response, will continue to do so until user inputs "quit"
 4. Will potentially add a way to save the responses to a text file in the future as well as change into an HTML format so that it can be viewed on a webpage
+
+### Magic 8 Ball (07.17.2024 - 07.22.2024)
+
+1. Created from python base of 8-ball game
+2. Utlized py-script in HTML so that it can be used on a web page (still learning how to use this method, learned for school project briefly and taught self from there)
+3. Doesn't require an input to work, but is useful
+4. Will possibly add a way to save responses later
