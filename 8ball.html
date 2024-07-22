@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://pyscript.net/latest/pyscript.css" />
+    <script defer src="https://pyscript.net/latest/pyscript.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/beercss@3.6.8/dist/cdn/beer.min.css" rel="stylesheet">
+    <script type="module" src="https://cdn.jsdelivr.net/npm/beercss@3.6.8/dist/cdn/beer.min.js"></script>
+    <script type="module"
+        src="https://cdn.jsdelivr.net/npm/material-dynamic-colors@1.1.2/dist/cdn/material-dynamic-colors.min.js"></script>
+    <link rel="stylesheet" href="https://pyscript.net/latest/pyscript.css" />
+    <style>
+        body{
+            display: flex;
+        }
+
+        #descript{
+            margin-bottom: 20%;
+        }
+
+        #ball{
+            display: block;
+            margin: auto;
+            background-color: #111;
+            border-radius: 50%;
+            height: 70vh;
+            width: 70vh;
+            background: radial-gradient(circle at 50% 120%, #323232, #0a0a0a 80%, #000000 100%);
+        }
+        #ball:before {
+            content: "";
+            display: flex;
+            background: radial-gradient(
+                circle at 50% 120%,
+                rgba(255, 255, 255, 0.4),
+                rgba(255, 255, 255, 0) 70%
+            );
+            border-radius: 50%;
+            bottom: 2.5%;
+            left: 5%;
+            opacity: 0.4;
+            height: 100%;
+            width: 90%;
+            filter: blur(5px);
+            z-index: 2;
+        }
+        #ball:after {
+            content: "";
+            display: flex;
+            width: 100%;
+            height: 100%;
+            top: 5%;
+            left: 10%;
+            border-radius: 50%;
+            background: radial-gradient(
+                circle at 45% 50%,
+                rgba(255, 255, 255, 0.2),
+                rgba(255, 255, 255, 0.2) 12%,
+                rgba(255, 255, 255, 0) 18%
+            );
+            transform: translateX(-80px) translateY(-90px) skewX(-20deg);
+            filter: blur(10px);
+        }
+        form{
+            display: flex;
+            flex-direction: column;
+            background: radial-gradient(circle at 50% 50%, #4b0082, #2e0854);
+            height: 50%;
+            width: 50%;
+            border-radius: 50%;
+            box-shadow: 0 0 20px rgba(75, 0, 130, 0.7);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+        label, input, #answer{
+            text-align: center;
+            margin-left: 5%;
+            height: 35%;
+            width: 80%;
+            font-size: large;
+            font-weight: bold;
+        }
+        #answer{
+            margin-left: 15%;
+            margin-top: 5%;
+            font-weight: bold;
+            height: 100%;
+            width: 100%;
+            padding: 2%;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+        #ask{
+            text-align: center;
+            margin-left: 35%;
+            margin-top: 5%;
+        }
+    </style>
+</head>
+<body>
+    <py-config>
+        packages = ['numpy']
+    </py-config>
+    <py-script>
+        import numpy as np
+    </py-script>
+    <div class="absolute top center center-align">
+        <p>Magic 8 Ball</p>
+        <p id="descript">Ask your question, click "Ask" and the 8 Ball will give you your result</p>
+    </div>
+    <div class="fixed center middle center-align middle-align" id="ball">
+        <form class="fixed center middle center-align top-align">
+            <label for="question">Question:
+                <input type="text" name="question" id="question">
+            </label>
+            <label for="answer">Answer:
+                <output name="answer" id="answer"></output>
+            </label>
+            <button type="button" id="ask">Ask</button>
+        </form>
+    </div>
+    <py-script>
+        import  asyncio
+        from pyscript import when
+        @when("click", selector="#ask")
+
+        async def answer_question(event):
+            answer = Element("answer")
+            answer.clear()
+            answer.write(f"\n«Shaking...»")
+            await asyncio.sleep(1)
+
+            ans_selection = np.random.randint(1, 20)
+            answers = {
+                1: "It is certain",
+                2: "It is decidedly so",
+                3: "Yes",
+                4: "Reply hazy try again",
+                5: "Ask again later",
+                6: "Concentrate and ask again",
+                7: "My reply is no",
+                8: "Outlook not so good",
+                9: "Very doubtful",
+                10: "My sources say no",
+                11: "Outlook good",
+                12: "Very doubtful",
+                13: "Reply hazy, try again",
+                14: "Signs point to yes",
+                15: "Without a doubt",
+                16: "Yes, definitely",
+                17: "You may rely on it",
+                18: "As I see it, yes",
+                19: "Most likely",
+                20: "Outlook good",
+            }
+            answer.write("\n" + answers.get(ans_selection))
+    </py-script>
+</body>
+</html>
