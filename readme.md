@@ -59,3 +59,16 @@
 2. Utlized py-script in HTML so that it can be used on a web page (still learning how to use this method, learned for school project briefly and taught self from there)
 3. Doesn't require an input to work, but is useful
 4. Will possibly add a way to save responses later
+
+### Hangman (07.22.2024 - 07.23.2024)
+
+1. Built a python version of hangman with guidance from [realpython.com](https://realpython.com/python-hangman/)
+2. Utilizes a word list (words.txt) to randomly select a word for the game
+3. Requires user input to guess a letter, will print out the word with guessed letters in place of underscores
+4. Minor deviations from guided code include:
+   - Line 2 = importing time and its uses on lines 148, 176, 187, & 190
+   - Lines 154 - 157 = includes amount of incorrect guesses out of max as well as multiline text for the introduction
+   - Lines 173 - 180 & 184-191 = asks user if they would like to play again or not, allowing to loop through the game without having to restart the program
+   - Lines 140 & 194 = calls the game loop as a function so that it can be called again in the "play again" loop
+5. Other insignificant changes such as phrasing and spacing
+6. Will potentially add a tally of games won to games lost
