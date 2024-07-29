@@ -72,3 +72,11 @@
    - Lines 140 & 194 = calls the game loop as a function so that it can be called again in the "play again" loop
 5. Other insignificant changes such as phrasing and spacing
 6. Will potentially add a tally of games won to games lost
+
+### (07.29.2024)
+
+1. Updated word list to include other words and removed a few that are more difficult/niche
+2. Turned word list into a tuple to include difficulty and category
+3. Created a new function to generate a random word from the tuple
+4. Allows the user to pick difficulty (easy, medium, hard)
+5. Displays the word's category after word is picked

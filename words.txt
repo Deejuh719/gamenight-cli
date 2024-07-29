@@ -351,3 +351,5 @@ zipper
 zit
 zodiac
 zombie
+zoologist
+zucchini
