@@ -36,88 +36,92 @@ def main():
             time.sleep(1)
             sys.exit()
 
-            #let player enter bet
-            print("You have ${:,} to bet.".format(money))
-            bet = getBet(money)
+        #let player enter bet
+        print('You have ${}'.format(money))
+        bet = getBet(money)
 
-            #give the dealer and player two cards each from the deck
-            deck = getDeck()
-            dealerHand = [deck.pop(), deck.pop()]
-            playerHand = [deck.pop(), deck.pop()]
+        #give the dealer and player two cards each from the deck
+        deck = getDeck()
+        dealerHand = [deck.pop(), deck.pop()]
+        playerHand = [deck.pop(), deck.pop()]
 
-            #handle player actions
-            print('Bet:', bet)
-            while True: #loops until player stands or busts
-                displayHands(playerHand, dealerHand, False)
-                print()
+        #handle player actions
+        print('Bet: ${}'.format(bet))
+        while True: #loops until player stands or busts
+            displayHands(playerHand, dealerHand, False)
+            print()
 
-                #check if player bust
-                if getHandValue(playerHand) > 21:
-                    break
+            #check if player bust
+            if getHandValue(playerHand) > 21:
+                break
 
-                #get player's choice (H,S,D)
-                move = getMove(playerHand, money - bet)
+            #get player's choice (H,S,D)
+            move = getMove(playerHand, money - bet)
 
-                #handle player's choice
-                if move == 'D':
-                    #double down
-                    additionalBet = getBet(min(bet, (money-bet)))
-                    bet += additionalBet
-                    print('Bet increased to {}.'.format(bet))
-                    print('Bet:', bet)
+            #handle player's choice
+            if move == 'D':
+                #double down
+                additionalBet = getBet(min(bet, (money-bet)))
+                bet += additionalBet
+                print('Bet increased to ${}.'.format(bet))
+                print('Bet: ${}'.format(bet))
                 
-                if move in ('H', 'D'):
-                    #hit/doubling takes another card
-                    newCard = deck.pop()
-                    rank, suit = newCardprint('You drew a {} of {}.'.format(rank,suit))
-                    playerHand.append(newCard)
+            if move in ('H', 'D'):
+                #hit/doubling takes another card
+                newCard = deck.pop()
+                rank, suit = newCard
+                print('You drew a {} of {}.'.format(rank,suit))
+                playerHand.append(newCard)
 
-                    if getHandValue(playerHand) > 21:
-                        #player busts
-                        continue
+                if getHandValue(playerHand) > 21:
+                    #player busts
+                    continue
 
-                if move in ('S', 'D'):
-                    #standing/doubling stops player turn
-                    break
+            if move in ('S', 'D'):
+                #standing/doubling stops player turn
+                break
 
-                #handle dealer's actions
-                if getHandValue(playerHand) <= 21:
-                    while getHandValue(dealerHand) < 17:
-                        #dealer hits
-                        print('Dealer hits.')
-                        dealerHand.append(deck.pop())
-                        displayHands(playerHand, dealerHand, False)
+        #handle dealer's actions
+        if getHandValue(playerHand) <= 21:
+            while getHandValue(dealerHand) < 17:
+                #dealer hits
+                print('Dealer hits.')
+                dealerHand.append(deck.pop())
+                displayHands(playerHand, dealerHand, False)
 
-                        if getHandValue(dealerHand) > 21:
-                            break #dealer busts
-                        input('Press Enter to continue...')
-                        print('\n\n')
-
-                #show dealer's final hand
-                displayHands(playerHand, dealerHand, True)
-
-                playerValue = getHandValue(playerHand)
-                dealerValue = getHandValue(dealerHand)
-                #handle win, lose, or draw
-                if dealerValue > 21:
-                    print('Dealer busts! You win ${}!'.format(bet))
-                    money += bet
-                elif (playerValue > 21) or (playerValue < dealerValue):
-                    print('You lost! Dealer wins ${}.'.format(bet))
-                    money -= bet
-                elif playerValue > dealerValue:
-                    print('You win ${}!'.format(bet))
-                elif playerValue == dealerValue:
-                    print("It's a push. No winners or losers.")
-
+                if getHandValue(dealerHand) > 21:
+                    break #dealer busts
                 input('Press Enter to continue...')
                 print('\n\n')
+
+        #show dealer's final hand
+        displayHands(playerHand, dealerHand, True)
+
+        playerValue = getHandValue(playerHand)
+        dealerValue = getHandValue(dealerHand)
+        #handle win, lose, or draw
+        if dealerValue > 21:
+            print('Dealer busts! You win ${}!'.format(bet))
+            money += bet
+        elif (playerValue > 21) or (playerValue < dealerValue):
+            print('You lost!')
+            money -= bet
+        elif playerValue > dealerValue:
+            print('You win ${}!'.format(bet))
+            money += bet
+        elif playerValue == dealerValue:
+            print("It's a push. Your bet is returned.")
+
+        input('Press Enter to continue...')
+        print('\n\n')
 
 def getBet(maxBet):
     """Ask how much the player wants to bet, and make sure it's valid."""
     while True: #asks until a valid amount is input
-        print('How much would you like to bet? (1-{}), or Q to quit.'.format(maxBet))
-        bet = input('>$ ').upper().strip()
+        print('How much would you like to bet? (1-{}), (A)ll in, or (Q)uit.'.format(maxBet))
+        bet = input('>> ').upper().strip()
+        if bet == 'A':
+            return maxBet
         if bet == 'Q':
             print('Come back again soon!')
             time.sleep(1)
@@ -159,6 +163,8 @@ def displayHands(playerHand, dealerHand, showDealerHand):
 def getHandValue(cards):
     """Returns the value of the cards in the hand. Since Aces are 1 or 11
     it picks most suitable value."""
+    value = 0
+    numberOfAces = 0
 
     #add non-ace cards
     for card in cards:
@@ -177,42 +183,48 @@ def getHandValue(cards):
         if value + 10 <= 21:
             value += 10 #add 10 to value
         
-        return value
+    return value
 
 def displayCards(cards):
     """Displays cards in list"""
-    rows = ['', '', '', '', ''] #5 rows of 5 cards each
+    rows = ['', '', '', '', ''] #top row, middle row, etc
 
     for i, card in enumerate(cards):
-        rows[0] += ' _____ '
-        if card = BACKSIDE:
-            rows[1] +=' | !  ! | '
-            rows[2] +=' |  !   | '
-            rows[3] +=' |_!__!_| '
+        rows[0] += '  _____ '
+        if card == BACKSIDE:
+            rows[1] +=' | ~ ~ | '
+            rows[2] +=' | ~ ~ | '
+            rows[3] +=' | ~ ~ | '
+            rows[4] +='  ------ '
         else:
             rank, suit = card #card is tuple
-            rows[1] +=' |{}{}{}| '.format(rank, suit, suit)
-            rows[2] +=' |{}{}{}| '.format(suit, rank, suit)
-            rows[3] +=' |{}{}{}| '.format(suit, suit, rank)
+            rows[1] +=' |{} {} {}| '.format(rank, suit, suit)
+            rows[2] +=' |{} {} {}| '.format(suit, rank, suit)
+            rows[3] +=' |{} {} {}| '.format(suit, suit, rank)
+            rows[4] +='  ------ '
 
-        for row in rows:
-            print(row)
+    for row in rows:
+        print(row)
 
 def getMove(playerHand, money):
     """Asks for player's move and makes sure it's valid."""
     while True: #ask til player enters valid move
-        moves = ['(H)it, (S)tand, or (Q)uit?']
+        moves = ['(H)it, (S)tand', '(Q)uit']
         """Player can double on first move because they have 2 cards"""
         if len(playerHand) == 2 and money > 0:
             moves.append('(D)ouble down')
         
         #get player's move
-        movePrompt = ', '.join(moves) + '> '
+        movePrompt = ', '.join(moves) + ' >> '
         move = input(movePrompt).upper()
-        if move in ('H', 'S', 'Q'):
+        if move in ('H', 'S'):
             return move #valid move
         if move == 'D' and '(D)ouble down' in moves:
             return move #valid move
+        if move == 'Q':
+            print('Thanks for playing!')
+            time.sleep(1)
+            sys.exit()
 
 if __name__ == '__main__':
     main()

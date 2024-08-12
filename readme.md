@@ -80,3 +80,15 @@
    3. Created a new function to generate a random word from the tuple
    4. Allows the user to pick difficulty (easy, medium, hard)
    5. Displays the word's category after word is picked
+
+### Blackjack (08.12.2024)
+
+1. Built a python version of blackjack with guidance from [Big Book of Small Python Projects](https://inventwithpython.com/bigbookpython/project4.html)
+2. Utilizes tuples to generate the deck of cards.
+3. Requires user input for betting, deciding to hit or stand, and quitting.
+4. Minor deviations from guided code include:
+   - Line 27 gives a smaller bet than the suggested 5000
+   - Lines 121-124 allows for an "All in" bet
+   - Lines 212 and 224 allow for a quit option while decidingg to hit or stand
+   - Minor tweaks to print statements and some time.sleep() functions
+5. Planning to impliment a "player won" and "player lost" function to keep track of wins and losses in either money or hands (or both)
