@@ -48,3 +48,6 @@ if encryption or decryption:
         print(f'Encrypted Text: {encryption}')
 else:
     print('Something went wrong...\nPlease try again. :(')
+
+if __name__ == '__main__':
+    main()

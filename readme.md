@@ -92,3 +92,12 @@
    - Lines 212 and 224 allow for a quit option while decidingg to hit or stand
    - Minor tweaks to print statements and some time.sleep() functions
 5. Planning to impliment a "player won" and "player lost" function to keep track of wins and losses in either money or hands (or both)
+
+### GameNight (08.12.2024)
+
+1. Implimented a way to show off the collection of python games I've been building in one location
+2. Uses a list of games that are imported and allow the user to select which one to play
+3. When games are over, or if user wishes to quit, the game will return to the main menu
+4. Quitting from the main menu will exit the program entirely
+5. Will add more games as they are created
+6. Planning on creating a way to keep track of wins and losses for each game

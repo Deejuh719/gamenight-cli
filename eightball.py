@@ -1,13 +1,13 @@
 import random
 import time
 
-def main():
+def main(gamenight_main):
     print("\u2058Hello, I am the ~~Magic \u2787 Ball~~!\u2058")
     time.sleep(1)
     print("Ask me anything and I'll show you your future!")
     print("Type 'quit' to exit the game.")
     print("\n")
-    time.sleep(2)
+    time.sleep(1)
     while True: # Main game loop
         print("Focus and ask your question to the Magic 8 Ball.")
         time.sleep(1)
@@ -25,7 +25,7 @@ def main():
             time.sleep(0.5)
             print("Magic 8 Ball: Created by K Surratt found on https://github.com/deejuh719")
             print("\n")
-            break  # Break out of the while loop
+            gamenight_main()  # Break out of the while loop
 
         # Use if statements to print answer based on number generated
         elif answer == 1:

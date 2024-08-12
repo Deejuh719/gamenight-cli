@@ -410,7 +410,7 @@ def game_over(guesses_taken, target_word, letters_guessed): # checks if the game
         or set(target_word) <= letters_guessed # checks if the player has guessed all the letters
     )
 
-def play_hangman():
+def main(gamenight_main):
     print("""Let's play Hangman! \n
             Choose your difficulty (easy, medium, or hard).""") # prints the title
     while True:
@@ -454,23 +454,21 @@ def play_hangman():
         print(f"Sorry, you lost. The word was {target_word} \n")
         print("Play again? y or n") # asks if the player wants to play again
         if input("") == "y": # if yes, it plays again
-            play_hangman()
-            time.sleep(1)
+            main(gamenight_main)
         else:
             print("Thanks for playing") # if no, prints thanks and exits
             time.sleep(1)
-            exit()
+            return
     else:
         print(f"Congratulations, you won. The word was: {target_word} \n")
         time.sleep(1)
         print("Play again? y or n")
         if input("") == "y":
-            play_hangman()
-            time.sleep(1)
+            main(gamenight_main)
         else:
             print("Thanks for playing")
             time.sleep(1)
-            exit()
+            gamenight_main()
 
 if __name__ == "__main__":
-    play_hangman()
+    main()

@@ -7,7 +7,7 @@ SPADES = chr(9824) #for '♠'
 CLUBS = chr(9827) #for '♣'
 BACKSIDE = 'backside'
 
-def main():
+def main(gamenight_main):
     print("""Let's Play Blackjack!
           
           Goal: 
@@ -34,11 +34,11 @@ def main():
             time.sleep(0.5)
             print("Thank you for playing!")
             time.sleep(1)
-            sys.exit()
+            gamenight_main()
 
         #let player enter bet
         print('You have ${}'.format(money))
-        bet = getBet(money)
+        bet = getBet(money, gamenight_main)
 
         #give the dealer and player two cards each from the deck
         deck = getDeck()
@@ -115,7 +115,7 @@ def main():
         input('Press Enter to continue...')
         print('\n\n')
 
-def getBet(maxBet):
+def getBet(maxBet, gamenight_main):
     """Ask how much the player wants to bet, and make sure it's valid."""
     while True: #asks until a valid amount is input
         print('How much would you like to bet? (1-{}), (A)ll in, or (Q)uit.'.format(maxBet))
@@ -125,7 +125,7 @@ def getBet(maxBet):
         if bet == 'Q':
             print('Come back again soon!')
             time.sleep(1)
-            sys.exit()
+            gamenight_main()
         
         if not bet.isdecimal():
             continue #player didn't enter a number so ask again
@@ -206,7 +206,7 @@ def displayCards(cards):
     for row in rows:
         print(row)
 
-def getMove(playerHand, money):
+def getMove(playerHand, money, gamenight_main):
     """Asks for player's move and makes sure it's valid."""
     while True: #ask til player enters valid move
         moves = ['(H)it, (S)tand', '(Q)uit']
@@ -224,7 +224,7 @@ def getMove(playerHand, money):
         if move == 'Q':
             print('Thanks for playing!')
             time.sleep(1)
-            sys.exit()
+            gamenight_main()
 
 if __name__ == '__main__':
     main()

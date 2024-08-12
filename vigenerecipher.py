@@ -2,6 +2,8 @@
 Edited by Khadijah Surratt
 Base code available at https://nostarch.com/big-book-small-python-programming"""
 
+import time
+
 try:
     import pyperclip
 except ImportError:
@@ -10,7 +12,7 @@ except ImportError:
 #Every possible symbol that can be encrypted/decrypted:
 LETTERS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
 
-def main():
+def main(gamenight_main):
     print('\t\t~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~')
     print('\t\t\tVigenere Cipher')
     print("""
@@ -21,45 +23,53 @@ def main():
             enough to remain unbroken for centuries.""")
     print('\t\t~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~')
 
-    # Let the user specify if they are encrypting or decrypting
-    while True: # Keep asking until the user enters e or d
-        print('Do you want to (e)ncrypt or (d)ecrypt?')
-        response = input('> ').lower()
-        if response.startswith('e'):
-            myMode = 'encrypt'
-            break
-        elif response.startswith('d'):
-            myMode = 'decrypt'
-            break
-        print('Please enter the letter e or d.')
+    while True:
+        # Let the user specify if they are encrypting or decrypting
+        while True: # Keep asking until the user enters e, d or q
+            print('Do you want to (e)ncrypt, (d)ecrypt, or (q)uit to game night?')
+            response = input('> ').lower()
+            if response.startswith('e'):
+                myMode = 'encrypt'
+                break
+            elif response.startswith('d'):
+                myMode = 'decrypt'
+                break
+            elif response.startswith('q'):
+                print("Returning to Game Night...")
+                gamenight_main()
     
-    # Let the user specify the key to use
-    while True: # Keep asking until the user enters a valid key
-        print('Please specify the key to use.')
-        print('It can be a word or any combination of letters:')
-        response = input('> ').upper()
-        if response.isalpha():
-            myKey = response
-            break
+        # Let the user specify the key to use
+        while True: # Keep asking until the user enters a valid key
+            print('Please specify the key to use.')
+            print('It can be a word or any combination of letters:')
+            response = input('> ').upper()
+            if response.isalpha():
+                myKey = response
+                break
 
-    # Let the user specify the message to encrypt/decrypt
-    print('Enter the message to {}.'.format(myMode))
-    myMessage = input('> ')
+        # Let the user specify the message to encrypt/decrypt
+        print('Enter the message to {}.'.format(myMode))
+        myMessage = input('> ')
 
-    # Perform the encryption/decryption:
-    if myMode == 'encrypt':
-        translated = encryptMessage(myMessage, myKey)
-    elif myMode == 'decrypt':
-        translated = decryptMessage(myMessage, myKey)
+        # Perform the encryption/decryption:
+        if myMode == 'encrypt':
+            translated = encryptMessage(myMessage, myKey)
+        elif myMode == 'decrypt':
+            translated = decryptMessage(myMessage, myKey)
 
-    print('%sed message:' % (myMode.title()))
-    print(translated)
+        print('%sed message:' % (myMode.title()))
+        print(translated)
 
-    try:
-        pyperclip.copy(translated)
-        print('Full %sed text copied to clipboard.' % (myMode))
-    except:
-        pass # Do nothing if pyperclip wasn't installed
+        try:
+            pyperclip.copy(translated)
+            print('Full %sed text copied to clipboard.' % (myMode))
+        except:
+            pass # Do nothing if pyperclip wasn't installed
+
+        print("\nDo you want to perform another operation? (y/n)")
+        if input('> ').lower().startswith('n'):
+            print("Returning to Game Night...")
+            gamenight_main()
 
 def encryptMessage(message, key):
     """Encrypt the message using the key"""

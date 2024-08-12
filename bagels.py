@@ -10,7 +10,7 @@ import re
 NUM_DIGITS = 4 # Number of digits in the number to guess, can change later
 MAX_GUESSES = 20 # Number of guesses allowed, can change later
 
-def main():
+def main(gamenight_main):
     print('''Bagels Game, a game of deductive logic.
           by Al Sweigart
           Toyed with by Khadijah Surratt github.com/deejuh719
@@ -23,7 +23,9 @@ def main():
           F = Fermi           One digit is correct and in the right position.
           B = Bagels          No digit is correct.
 
-          For example, if the secret number was 248 and your guess was 843, the clues would be Fermi Pico.'''.format(NUM_DIGITS))
+          For example, if the secret number was 248 and your guess was 843, the clues would be Fermi Pico.
+          
+          If you wish to quit, simply type "q" then press enter.'''.format(NUM_DIGITS))
     print('\n')
 
     while True: # Main game loop
@@ -36,13 +38,15 @@ def main():
         while numGuesses <= MAX_GUESSES:
             guess = ''
             # Keep looping until they enter a valid guess
-            if not re.match(r'^[A-Fa-f0-9]$'.format(NUM_DIGITS), guess):
+            while not re.match(r'^[A-Fa-f0-9]{' + str(NUM_DIGITS) + '}$', guess):
                 print('Guess #{}:'.format(numGuesses))
                 guess = input('> ')
+                if len(guess) != NUM_DIGITS:
+                    print(f'Please enter exactly {NUM_DIGITS} characters.')
             # Check if they want to quit
-            if guess.lower() == 'quit':
+            if guess.lower() == 'q':
                 print('Quitting game... See ya around.')
-                return
+                gamenight_main()
 
             clues = getClues(guess, secretNum)
             print(clues)
