@@ -1,5 +1,12 @@
 import random, sys, time
 
+# TO DO
+# Dejank 10, Q cards, lines print wonky
+# Edit hand on splitting: only accounts for hand2 not hand1 when betting
+#   if hand2 is a push, full bet is returned, hand1 neglected entirely
+#   if hand1 is lesser than dealer, hand2 neglected entirely
+# Figure out why it takes pressing enter twice to continue and why betting input line prints twice
+
 #Set up constants
 HEARTS = chr(9829) #for '♥'
 DIAMONDS = chr(9830) #for '♦'
