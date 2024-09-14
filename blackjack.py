@@ -19,7 +19,8 @@ def main(gamenight_main):
             (H)it to take another card.
             (S)tand to stop taking cards.
             (D)ouble down to double your bet on the first turn, but you
-            have to hit one more time before you can stand.
+            have to hit one more time.
+            (Sp)lit if you have two cards of equal value on first draw, bet is same on both hands.
             If there is a tie, the bet returns to the player.
             Dealer stands at 17.
             (Q)uit will end the game.""")
@@ -29,12 +30,16 @@ def main(gamenight_main):
         #check if player ran out of money
         if money <= 0:
             print("Oh no! You've run out of money!")
-            time.sleep(0.5)
+            time.sleep(0.7)
             print("Good thing this wasn't real money.")
-            time.sleep(0.5)
-            print("Thank you for playing!")
-            time.sleep(1)
-            gamenight_main()
+            time.sleep(0.7)
+            print("Would you like to start over? Y or N")
+            if input('> ').upper() == 'Y':
+                money = 1000
+            else:
+                print("Thanks for playing!")
+                time.sleep(1)
+                gamenight_main()
 
         #let player enter bet
         print('You have ${}'.format(money))
@@ -51,26 +56,104 @@ def main(gamenight_main):
             displayHands(playerHand, dealerHand, False)
             print()
 
+            #checks for blackjack for player, dealer, or both
+            if getHandValue(playerHand) == 21 and (len(playerHand) == 2 and len(dealerHand) == 2):
+                print('Blackjack! \nYou win ${}!'.format(bet * 1.5))
+                money += bet * 1.5
+                break
+            elif (getHandValue(playerHand) == 21 and len(playerHand) == 2) and (len(dealerHand) == 2 and getHandValue(dealerHand) == 21):
+                print('Blackjack! \nPush. Bet is returned.')
+                money += bet
+                break
+            elif getHandValue(dealerHand) == 21 and (len(playerHand) == 2 and len(dealerHand) == 2):
+                print('Blackjack! \nHouse wins ${}!'.format(bet))
+                money -= bet
+                break
+
             #check if player bust
             if getHandValue(playerHand) > 21:
                 break
 
             #get player's choice (H,S,D)
-            move = getMove(playerHand, money - bet)
+            move = getMove(playerHand, money - bet, gamenight_main)
 
             #handle player's choice
             if move == 'D':
                 #double down
-                additionalBet = getBet(min(bet, (money-bet)))
-                bet += additionalBet
-                print('Bet increased to ${}.'.format(bet))
-                print('Bet: ${}'.format(bet))
-                
+                if money >= bet * 2:
+                    bet *= 2
+                    print('Doubling down! \nBet increased to ${}.'.format(bet))
+                    print('Bet: ${}'.format(bet))
+                    time.sleep(1)
+                else:
+                    move.remove('D')
+
+            if move == 'SP':
+                #split
+                if money >= bet * 2:
+                    bet *= 2
+                    print('Splitting! \nBet increased to ${}.'.format(bet))
+                    print('Bet: ${}'.format(bet))
+                    time.sleep(1)
+                    handOne = [playerHand[0], deck.pop()]
+                    handTwo = [playerHand[1], deck.pop()]
+                    print("\n" + "="*40)
+                    print("Your hands after splitting:")
+                    print("="*40)
+
+                    for i, hand in enumerate([handOne, handTwo], 1):
+                        print(f"\nHand {i}:")
+                        print("-"*20)
+                        displayCards(hand)
+                        print(f"Hand {i} Value: {getHandValue(hand)}")
+                        print("-"*20)
+
+                    time.sleep(1)
+
+                    for i, hand in enumerate([handOne, handTwo], 1):
+                        print(f"\n{'='*20} Playing Hand {i} {'='*20}")
+
+                        while True:
+                            print(f"\nCurrent Hand {i}:")
+                            displayCards(hand)
+                            print(f"Hand {i} Value: {getHandValue(hand)}")
+                            displayCards(hand)
+
+                            if getHandValue(playerHand) > 21:
+                                print('Bust! \nHouse wins ${}!'.format(bet))
+                                break
+                            move = getMove(hand, money - bet, gamenight_main)
+                            if move == 'H':
+                                newCard = deck.pop()
+                                rank, suit = newCard
+                                print('You drew a {} of {}.'.format(rank, suit))
+                                hand.append(newCard)
+                                time.sleep(1)
+                            elif move == 'S':
+                                break
+                            elif move == 'D':
+                                if money >= bet * 2:
+                                    bet *= 2
+                                    print('Doubling down! \nBet increased to ${}.'.format(bet))
+                                    print('Bet: ${}'.format(bet))
+                                    newCard = deck.pop()
+                                    rank, suit = newCard
+                                    print('You drew a {} of {}.'.format(rank, suit))
+                                    hand.append(newCard)
+                                    time.sleep(1)
+                                    break
+                                else:
+                                    print("Not enough money to double down.")
+                                    move.remove('D')  
+                else:
+                    move.remove('Sp')
+
             if move in ('H', 'D'):
                 #hit/doubling takes another card
                 newCard = deck.pop()
                 rank, suit = newCard
                 print('You drew a {} of {}.'.format(rank,suit))
+                time.sleep(1)
                 playerHand.append(newCard)
 
                 if getHandValue(playerHand) > 21:
@@ -85,9 +168,10 @@ def main(gamenight_main):
         if getHandValue(playerHand) <= 21:
             while getHandValue(dealerHand) < 17:
                 #dealer hits
-                print('Dealer hits.')
                 dealerHand.append(deck.pop())
                 displayHands(playerHand, dealerHand, False)
+                print('Dealer hits.')
+                time.sleep(1)
 
                 if getHandValue(dealerHand) > 21:
                     break #dealer busts
@@ -99,18 +183,19 @@ def main(gamenight_main):
 
         playerValue = getHandValue(playerHand)
         dealerValue = getHandValue(dealerHand)
+
         #handle win, lose, or draw
         if dealerValue > 21:
-            print('Dealer busts! You win ${}!'.format(bet))
+            print('Dealer busts! \nYou win ${}!'.format(bet))
             money += bet
         elif (playerValue > 21) or (playerValue < dealerValue):
-            print('You lost!')
+            print('You lost! \nHouse wins ${}!'.format(bet))
             money -= bet
         elif playerValue > dealerValue:
-            print('You win ${}!'.format(bet))
+            print('House loses! \nYou win ${}!'.format(bet))
             money += bet
         elif playerValue == dealerValue:
-            print("It's a push. Your bet is returned.")
+            print("It's a push. \nYour bet is returned.")
 
         input('Press Enter to continue...')
         print('\n\n')
@@ -192,17 +277,16 @@ def displayCards(cards):
     for i, card in enumerate(cards):
         rows[0] += '  _____ '
         if card == BACKSIDE:
-            rows[1] +=' | ~ ~ | '
-            rows[2] +=' | ~ ~ | '
-            rows[3] +=' | ~ ~ | '
-            rows[4] +='  ------ '
+            rows[1] += ' |     |'
+            rows[2] += ' | ~ ~ |'
+            rows[3] += ' |     |'
+            rows[4] += '  ----- '
         else:
-            rank, suit = card #card is tuple
-            rows[1] +=' |{} {} {}| '.format(rank, suit, suit)
-            rows[2] +=' |{} {} {}| '.format(suit, rank, suit)
-            rows[3] +=' |{} {} {}| '.format(suit, suit, rank)
-            rows[4] +='  ------ '
-
+            rank, suit = card
+            rows[1] += ' |{}    |'.format(rank.ljust(1))
+            rows[2] += ' |  {}  |'.format(suit)
+            rows[3] += ' |    {}|'.format(rank.rjust(1))
+            rows[4] += '  ----- '
     for row in rows:
         print(row)
 
@@ -213,13 +297,16 @@ def getMove(playerHand, money, gamenight_main):
         """Player can double on first move because they have 2 cards"""
         if len(playerHand) == 2 and money > 0:
             moves.append('(D)ouble down')
-        
+        if len(playerHand) == 2 and money > 0 and (playerHand[0][0] == playerHand[1][0] or (playerHand[0][0] in '10JQK' and playerHand[1][0] in '10JQK')):
+            moves.append('(Sp)lit') #allow a split if the cards are the same
         #get player's move
         movePrompt = ', '.join(moves) + ' >> '
         move = input(movePrompt).upper()
         if move in ('H', 'S'):
             return move #valid move
         if move == 'D' and '(D)ouble down' in moves:
+            return move #valid move
+        if move == 'SP' and '(Sp)lit' in moves:
             return move #valid move
         if move == 'Q':
             print('Thanks for playing!')

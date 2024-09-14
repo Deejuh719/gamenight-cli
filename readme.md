@@ -101,3 +101,9 @@
 4. Quitting from the main menu will exit the program entirely
 5. Will add more games as they are created
 6. Planning on creating a way to keep track of wins and losses for each game
+
+   ### (08.13.2024) -
+
+   1. Updated games included in "Game Night Package"
+   2. Updated blackjack game to include proper bet doubling as well as splitting for same value cards
+   3. Updated bagels game to allow player to choose between using letters only (A-Z), numbers only (0-9), or both (A-F&1-5) to allow for different levels of challenge as well as proper error messages for each game choice
