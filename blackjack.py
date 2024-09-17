@@ -1,11 +1,15 @@
 import random, sys, time
 
 # TO DO
-# Dejank 10, Q cards, lines print wonky
+# Dejank 10, Q cards, lines print wonky, when first card causes others to jank
 # Edit hand on splitting: only accounts for hand2 not hand1 when betting
 #   if hand2 is a push, full bet is returned, hand1 neglected entirely
 #   if hand1 is lesser than dealer, hand2 neglected entirely
-# Figure out why it takes pressing enter twice to continue and why betting input line prints twice
+#   if bust on a hand, still asks to H,S,Q doesn't move to second hand automatically
+#   only displays one hand not both
+# Why does house win bet but player loses double when dealer has blackjack?
+# Why does game continue when player has blackjack?
+
 
 #Set up constants
 HEARTS = chr(9829) #for '♥'
@@ -63,17 +67,17 @@ def main(gamenight_main):
             displayHands(playerHand, dealerHand, False)
             print()
 
-            #checks for blackjack for player, dealer, or both
+#checks for blackjack for player, dealer, or both
             if getHandValue(playerHand) == 21 and (len(playerHand) == 2 and len(dealerHand) == 2):
-                print('Blackjack! \nYou win ${}!'.format(bet * 1.5))
+                print('You got Blackjack! \nYou win ${}!'.format(bet * 1.5))
                 money += bet * 1.5
                 break
             elif (getHandValue(playerHand) == 21 and len(playerHand) == 2) and (len(dealerHand) == 2 and getHandValue(dealerHand) == 21):
-                print('Blackjack! \nPush. Bet is returned.')
+                print('Blackjack push. Bet is returned.')
                 money += bet
                 break
             elif getHandValue(dealerHand) == 21 and (len(playerHand) == 2 and len(dealerHand) == 2):
-                print('Blackjack! \nHouse wins ${}!'.format(bet))
+                print('House has Blackjack! \nHouse wins ${}!'.format(bet))
                 money -= bet
                 break
 
@@ -126,8 +130,8 @@ def main(gamenight_main):
                             print(f"Hand {i} Value: {getHandValue(hand)}")
                             displayCards(hand)
 
-                            if getHandValue(playerHand) > 21:
-                                print('Bust! \nHouse wins ${}!'.format(bet))
+                            if getHandValue(handOne) > 21 or getHandValue(handTwo) > 21:
+                                print('Bust! \nHouse wins ${}!'.format(bet/2))
                                 break
                             move = getMove(hand, money - bet, gamenight_main)
                             if move == 'H':
@@ -136,6 +140,10 @@ def main(gamenight_main):
                                 print('You drew a {} of {}.'.format(rank, suit))
                                 hand.append(newCard)
                                 time.sleep(1)
+                                if getHandValue(handOne) > 21 or getHandValue(handTwo) > 21:
+                                    print('Bust! \nHouse wins ${}!'.format(bet/2))
+                                    break
+                                move = getMove(hand, money - bet, gamenight_main)
                             elif move == 'S':
                                 break
                             elif move == 'D':
@@ -185,7 +193,7 @@ def main(gamenight_main):
                 input('Press Enter to continue...')
                 print('\n\n')
 
-        #show dealer's final hand
+# Show dealer's final hand
         displayHands(playerHand, dealerHand, True)
 
         playerValue = getHandValue(playerHand)
@@ -279,7 +287,7 @@ def getHandValue(cards):
 
 def displayCards(cards):
     """Displays cards in list"""
-    rows = ['', '', '', '', ''] #top row, middle row, etc
+    rows = ['', '', '', '', '', ''] #top row, middle row, etc
 
     for i, card in enumerate(cards):
         rows[0] += '  _____ '
@@ -288,12 +296,14 @@ def displayCards(cards):
             rows[2] += ' | ~ ~ |'
             rows[3] += ' |     |'
             rows[4] += '  ----- '
+            rows[5] += ' '
         else:
             rank, suit = card
             rows[1] += ' |{}    |'.format(rank.ljust(1))
             rows[2] += ' |  {}  |'.format(suit)
             rows[3] += ' |    {}|'.format(rank.rjust(1))
             rows[4] += '  ----- '
+            rows[5] += ' '
     for row in rows:
         print(row)
 
