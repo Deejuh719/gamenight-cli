@@ -7,8 +7,11 @@ import random, sys, time
 #   if hand1 is lesser than dealer, hand2 neglected entirely
 #   if bust on a hand, still asks to H,S,Q doesn't move to second hand automatically
 #   only displays one hand not both
+#   hand1/hand2 in a split will automatically draw a card even if you stood causing a bust - 9.18.24
+#   maybe include a function that compares hand1 and 2 against dealer - 9.18.24
 # Why does house win bet but player loses double when dealer has blackjack?
-# Why does game continue when player has blackjack?
+# Why does game continue when player has blackjack? doesn't continue on dealer blackjack - 9.18.24
+# Player gets blackjack, but prints you win 1.5x bet and another statement of 1.0x bet, only returns 1.5x - 9.18.24
 
 
 #Set up constants
@@ -68,15 +71,15 @@ def main(gamenight_main):
             print()
 
 #checks for blackjack for player, dealer, or both
-            if getHandValue(playerHand) == 21 and (len(playerHand) == 2 and len(dealerHand) == 2):
+            if (getHandValue(playerHand) == 21 and len(playerHand) == 2) and (getHandValue(dealerHand) != 21 and len(dealerHand) == 2):
                 print('You got Blackjack! \nYou win ${}!'.format(bet * 1.5))
-                money += bet * 1.5
+                money += (bet * 1.5)
                 break
             elif (getHandValue(playerHand) == 21 and len(playerHand) == 2) and (len(dealerHand) == 2 and getHandValue(dealerHand) == 21):
                 print('Blackjack push. Bet is returned.')
                 money += bet
                 break
-            elif getHandValue(dealerHand) == 21 and (len(playerHand) == 2 and len(dealerHand) == 2):
+            elif (getHandValue(dealerHand) == 21 and len(dealerHand) == 2) and (len(playerHand) == 2 and getHandValue(playerHand) != 21):
                 print('House has Blackjack! \nHouse wins ${}!'.format(bet))
                 money -= bet
                 break
@@ -130,18 +133,29 @@ def main(gamenight_main):
                             print(f"Hand {i} Value: {getHandValue(hand)}")
                             displayCards(hand)
 
-                            if getHandValue(handOne) > 21 or getHandValue(handTwo) > 21:
+                            if getHandValue(handOne) > 21:
                                 print('Bust! \nHouse wins ${}!'.format(bet/2))
+                                handOne = []
+                                break
+                            elif getHandValue(handTwo) > 21:
+                                print('Bust! \nHouse wins ${}!'.format(bet/2))
+                                handTwo = []
                                 break
                             move = getMove(hand, money - bet, gamenight_main)
+                            
                             if move == 'H':
                                 newCard = deck.pop()
                                 rank, suit = newCard
                                 print('You drew a {} of {}.'.format(rank, suit))
                                 hand.append(newCard)
                                 time.sleep(1)
-                                if getHandValue(handOne) > 21 or getHandValue(handTwo) > 21:
+                                if getHandValue(handOne) > 21:
                                     print('Bust! \nHouse wins ${}!'.format(bet/2))
+                                    handTwo = []
+                                    break
+                                elif getHandValue(handTwo) > 21:
+                                    print('Bust! \nHouse wins ${}!'.format(bet/2))
+                                    handTwo = []
                                     break
                                 move = getMove(hand, money - bet, gamenight_main)
                             elif move == 'S':
@@ -331,4 +345,4 @@ def getMove(playerHand, money, gamenight_main):
             gamenight_main()
 
 if __name__ == '__main__':
-    main()
+    main(gamenight_main)
