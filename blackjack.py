@@ -9,6 +9,9 @@ import random, sys, time
 #   only displays one hand not both
 #   hand1/hand2 in a split will automatically draw a card even if you stood causing a bust - 9.18.24
 #   maybe include a function that compares hand1 and 2 against dealer - 9.18.24
+#   split now "allows for splitting again", but doesn't, then when you hit,
+#       it doesn't display the cards until you take another action - 9.19.24
+#   split now does a LOT of things, but still doesn't work properly - 9.19.24
 # Why does house win bet but player loses double when dealer has blackjack?
 # Why does game continue when player has blackjack? doesn't continue on dealer blackjack - 9.18.24
 # Player gets blackjack, but prints you win 1.5x bet and another statement of 1.0x bet, only returns 1.5x - 9.18.24
@@ -71,7 +74,7 @@ def main(gamenight_main):
             print()
 
 #checks for blackjack for player, dealer, or both
-            if (getHandValue(playerHand) == 21 and len(playerHand) == 2) and (getHandValue(dealerHand) != 21 and len(dealerHand) == 2):
+            if getHandValue(playerHand) == 21 and len(playerHand) == 2:
                 print('You got Blackjack! \nYou win ${}!'.format(bet * 1.5))
                 money += (bet * 1.5)
                 break
@@ -79,7 +82,7 @@ def main(gamenight_main):
                 print('Blackjack push. Bet is returned.')
                 money += bet
                 break
-            elif (getHandValue(dealerHand) == 21 and len(dealerHand) == 2) and (len(playerHand) == 2 and getHandValue(playerHand) != 21):
+            elif getHandValue(dealerHand) == 21 and len(dealerHand) == 2:
                 print('House has Blackjack! \nHouse wins ${}!'.format(bet))
                 money -= bet
                 break
@@ -260,7 +263,7 @@ def getDeck():
     return deck
 
 def displayHands(playerHand, dealerHand, showDealerHand):
-    """Shows hands but hides dealer's first card if showDealerHand is False."""
+    #Shows hands but hides dealer's first card if showDealerHand is False.
     print()
     if showDealerHand:
         print('DEALER:', getHandValue(dealerHand))
@@ -345,4 +348,4 @@ def getMove(playerHand, money, gamenight_main):
             gamenight_main()
 
 if __name__ == '__main__':
-    main(gamenight_main)
+    main()
