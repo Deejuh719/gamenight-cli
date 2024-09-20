@@ -1,4 +1,4 @@
-import eightball, blackjack, hangman, bagels, vigenerecipher
+import eightball, blackjack, hangman, bagels, vigenerecipher, quickdraw
 import time
 import sys
 
@@ -8,7 +8,8 @@ displayMenu = [
                         (3,"Hangman"),
                         (4, "Bagels"),
                         (5, "Vigenere Cipher"),
-                        (6, "Quit")
+                        (6, "Quick Draw"),
+                        (7, "Quit")
 ]
 
 def main():
@@ -39,6 +40,10 @@ def main():
             time.sleep(1)
             vigenerecipher.main(main)
         elif game_choice == '6':
+            print('You have selected Quick Draw.')
+            time.sleep(1)
+            quickdraw.main(main)
+        elif game_choice == '7':
             print('Maybe next time!')
             print('Lookout for more games and projects!')
             time.sleep(0.5)
