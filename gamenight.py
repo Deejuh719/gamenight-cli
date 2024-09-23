@@ -1,4 +1,4 @@
-import eightball, blackjack, hangman, bagels, vigenerecipher, quickdraw
+import eightball, blackjack, hangman, bagels, vigenerecipher, quickdraw, terminalhack
 import time
 import sys
 
@@ -9,7 +9,8 @@ displayMenu = [
                         (4, "Bagels"),
                         (5, "Vigenere Cipher"),
                         (6, "Quick Draw"),
-                        (7, "Quit")
+                        (7, "Terminal Hacker"),
+                        (8, "Quit")
 ]
 
 def main():
@@ -44,6 +45,10 @@ def main():
             time.sleep(1)
             quickdraw.main(main)
         elif game_choice == '7':
+            print('You have selected Terminal Hacker.')
+            time.sleep(1)
+            terminalhack.main(main)
+        elif game_choice == '8':
             print('Maybe next time!')
             print('Lookout for more games and projects!')
             time.sleep(0.5)
