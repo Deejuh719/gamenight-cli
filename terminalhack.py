@@ -1,3 +1,7 @@
+# TODO
+# make it interactive so you can select the closed brackets like in the game
+#       and it removes duds or resets tries
+
 import sys
 import random
 import time
