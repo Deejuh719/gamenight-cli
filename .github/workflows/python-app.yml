@@ -22,9 +22,10 @@ on:
             - 'README*'
 
 jobs:
-    build:
+    run-tests:
         runs-on: ubuntu-latest
-
+        env:
+            PYTHONPATH: ${{ github.workspace }}
         steps:
             # Step 1: Checkout Repository
             - name: Checkout Repository
