@@ -1,0 +1,55 @@
+# Sprint Planning
+
+## Overall Goal
+
+This project is focusing on a major refactor of my existing "Gamenight" app that is currently terminal/CLI based. The refactor will turn the terminal-based app into a web app utilizing Flask. I will also include various tests utilizing `pytest`, `Selenium/Playwright`, and `pytest-bdd`. The goal is to make the app more user-friendly, more visually appealing, as well as implementing a few new features while integrating SQA practices learned in class to improve the quality and maintainability of the codebase.
+
+## 1: Sprint Goals
+
+#### Sprint 1 Goals (Set up):
+
+- Establish base architecture for "GameNight" by creating a `GameService` layer and Flask app foundation from the CLI logic
+- Adding minimal HTML UI for gameplay
+- Writing basic pytests and integration tests for API and UI
+
+#### Sprint 2 Goals (Validation, Persistent Scores, Leaderboard):
+
+- Create server-side validation for game setup and moves
+- Persist scores with SQL/SQLAlchemy
+- Display a leaderboard on game selection screen
+
+#### Sprint 3 Goals (UI Automation, BDD, Full Regression):
+
+- Create `Selenium/Playwright` UI automation for core game flows
+- Create BDD acceptance tests for "play game & see updated leaderboard"
+- Clean up CI integration and regression practices
+
+## What's New?
+
+Sprint | Feature | Description
+-------|---------|------------
+1      | `GameService` Layer | Create a `GameService` layer to encapsulate game logic and state transitions
+1      | 
+
+## Definition of Done (DoD):
+
+
+## Sprint-Level Completion Criteria
+
+#### Sprint 1:
+
+- [ ] `GameService` layer created
+- [ ] Minimal HTML UI for gameplay
+- [ ] Basic pytests and integration tests for API and UI
+
+#### Sprint 2:
+
+- [ ] Server-side validation is complete and function
+- [ ] Persistent scores with SQL/SQLAlchemy
+- [ ] Leaderboard on game selection screen
+
+#### Sprint 3:
+
+- [ ] Selenium/Playwright UI automation for core game flows
+- [ ] BDD acceptance tests for "play game & see updated leaderboard"
+- [ ] Clean up CI integration and regression practices
