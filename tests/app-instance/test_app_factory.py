@@ -1,5 +1,5 @@
 # tests/app-instance/test_app_factory.py
-from app import create_app
+from ..app import create_app
 from flask import Flask
 
 def test_create_app_returns_flask_instance():

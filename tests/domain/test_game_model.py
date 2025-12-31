@@ -1,6 +1,6 @@
 # tests/domain/game_model.py
 import pytest
-from app.models.games import Game
+from ..app.models.games import Game
 
 def test_game_to_dict_includes_basic_fields():
     game = Game(id=1, name="trivia", description="Trivia Game", state={"round": 1})
