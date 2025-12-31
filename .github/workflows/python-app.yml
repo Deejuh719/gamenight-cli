@@ -24,8 +24,6 @@ on:
 jobs:
     run-tests:
         runs-on: ubuntu-latest
-        env:
-            PYTHONPATH: ${{ github.workspace }}/gamenight-cli/app
         steps:
             # Step 1: Checkout Repository
             - name: Checkout Repository
