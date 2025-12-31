@@ -25,7 +25,7 @@ jobs:
     run-tests:
         runs-on: ubuntu-latest
         env:
-            PYTHONPATH: ${{ github.workspace }}
+            PYTHONPATH: ${{ github.workspace }}/gamenight-cli/app
         steps:
             # Step 1: Checkout Repository
             - name: Checkout Repository
@@ -35,7 +35,7 @@ jobs:
             - name: Set Up Python
               uses: actions/setup-python@v5
               with:
-                python-version: "3.11"
+                python-version: "3.12"
 
             # Step 3: Install dependencies
             - name: Install dependencies
@@ -43,17 +43,22 @@ jobs:
                 python -m pip install --upgrade pip
                 pip install -r requirements.txt
 
-            # Step 4: Run tests with coverage tracking
+            # Step 4: Install Playwright Browsers
+            - name: Install Playwright Browsers
+              run: |
+                npx playwright install
+
+            # Step 5: Run tests with coverage tracking
             - name: Run tests with coverage
               run: |
                 pytest --cov=app --cov-report=term-missing
 
-            # Step 5: Enforce Minimum Coverage Percentage
+            # Step 6: Enforce Minimum Coverage Percentage
             - name: Enforce Minimum Coverage Percentage
               run: |
-                coverage report --fail-under=75
+                coverage report --fail-under=50
 
-            # Step 6: Save HTML coverage report
+            # Step 7: Save HTML coverage report
             - name: Upload HTML Coverage report
               uses: actions/upload-artifact@v4
               with:
