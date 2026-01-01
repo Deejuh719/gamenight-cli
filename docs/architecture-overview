@@ -1,0 +1,37 @@
+# Architecture Overview
+
+```mermaid
+graph TD
+
+%% ========== Entry Point ==========
+subgraph EntryPoint
+    A["main.py"] --> B["create_app()"]
+    A2["cli_app.py Deprecated"] -.-> K["Manual CLI Interface Legacy"]
+end
+
+%% ========== App Factory ==========
+subgraph FlaskAppFactory
+    B --> C["Flask App Instance"]
+    C --> D["Blueprint: /api/games"]
+    C --> D2["Blueprint: /games UI"]
+    C --> Eh["Blueprint: /api/health"]
+    C --> E["Register Error Handlers"]
+    B --> DI["Inject GameService with Database Repository"]
+end
+
+%% ========= API Blueprints ==========
+subgraph APIBlueprints
+    
+end
+
+%% ========= UI BluePrints =========
+subgraph UIBlueprints
+    
+end
+
+%% ========= Error Handlers =========
+subgraph ErrorHandlers
+    
+end
+
+```
