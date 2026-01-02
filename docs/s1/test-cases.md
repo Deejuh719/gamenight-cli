@@ -121,6 +121,18 @@ Each test case includes:
 - **Expected Results:**
     1. The `is_valid` method returns `True`
 
+## TC-GN-DL-004: GameSession Completion
+
+- **Description:** Verify GameSession is completed correctly.
+- **Test Type:** Automated
+- **Preconditions:**
+    1. GameSession is defined in `game_service.py`
+- **Test Steps:**
+    1. Create a new GameSession instance with a valid game
+    2. Call the `complete` method
+- **Expected Results:**
+    1. The `complete` method returns `True`
+
 ## Service Layer
 
 ### TC-GN-SRV-001: List All Games
