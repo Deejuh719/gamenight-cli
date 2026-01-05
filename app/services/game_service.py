@@ -21,8 +21,10 @@ class GameService:
 
     def list_available_games(self) -> List[str]:
         # Return a list of available game names
-        return [game_info["name"] for game_info in self.AVAILABLE_GAMES.values()]
-
+        return [
+                    {"id": game_id, "name": info["name"], "type": info["type"]}
+                    for game_id, info in self.AVAILABLE_GAMES.items()
+                ]
     def create_game_session(self, game_name: str, players: List[str]) -> dict:
         # Create a new game session
         game_info = next((info for info in self.AVAILABLE_GAMES.values() if info["name"] == game_name), None)
