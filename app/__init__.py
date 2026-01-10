@@ -2,6 +2,7 @@
 from flask import Flask
 from app.services.game_service import GameService
 from app.routes.health import health_bp
+from app.routes.game_api import game_api_bp
 
 def create_app(game_service=None):
     # Create Flask app
@@ -17,6 +18,7 @@ def create_app(game_service=None):
     
     # Register Blueprints
     app.register_blueprint(health_bp)
+    app.register_blueprint(game_api_bp)
 
     # Error handlers
     @app.errorhandler(404)

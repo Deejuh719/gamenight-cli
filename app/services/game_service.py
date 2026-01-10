@@ -16,42 +16,37 @@ class GameService:
     }
 
     def __init__(self):
-        # Initialize an empty dictionary to store game sessions
+        # Initialize the GameService with an empty sessions dictionary
         self.sessions: Dict[str, GameSession] = {}
 
     def list_available_games(self) -> List[str]:
         # Return a list of available game names
-        return [game_info["name"] for game_info in self.AVAILABLE_GAMES.values()]
-
-    def create_game_session(self, game_name: str, players: List[str]) -> dict:
-        # Create a new game session
-        game_info = next((info for info in self.AVAILABLE_GAMES.values() if info["name"] == game_name), None)
+        return [
+                    {"id": game_id, "name": info["name"], "type": info["game_type"]}
+                    for game_id, info in self.AVAILABLE_GAMES.items()
+                ]
+    def create_game_session(self, game_name: str, game_type: str, players: List[str]) -> dict:
+        # Create new game session
+        game_info = next((info for info in self.AVAILABLE_GAMES.values() if info["name"] == game_name and info["game_type"] == game_type), None)
         if not game_info:
-            raise ValueError(f"Game '{game_name}' is not available.")
-
-        session = GameSession(
-            game_name=game_info["name"],
-            game_type=game_info["game_type"],
-            players=players
-        )
+            raise ValueError("Invalid game name or type")
+        # Initialize new game session (round 1, 2, etc.)
+        session = GameSession(game_name, game_type, players)
         self.sessions[session.session_id] = session
         return session.to_dict()
 
     def get_session_by_id(self, session_id: str) -> Optional[dict]:
-        # Retrieve a game session by its ID
-        session = self.sessions.get(session_id)
-        if session:
-            return session.to_dict()
+        # Retrieve a game session by its ID (if it exists)
+        if session_id in self.sessions:
+            return self.sessions[session_id].to_dict()
         return None
 
     def make_move(self, session_id: str, move: dict) -> Optional[dict]:
-        # Make a move in the specified game session
+        # Update the game session state based on the move (by game type)
         session = self.sessions.get(session_id)
         if not session or not session.is_active:
             return None
-
-        session.update_state(move)
-        return session.to_dict()
+        return session.update_state(move)
 
     def end_game_session(self, session_id: str, result: str) -> Optional[dict]:
         # End the specified game session

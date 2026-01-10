@@ -19,16 +19,16 @@ def test_game_list(client):
     assert isinstance(data, list)
     assert len(data) == 7 # Current list of games is 7
 
-    # Verify structure of game data
+    # Verify the data in the games is not null or missing
     for game in data:
-        assert 'name' in game
-        assert 'game_type' in game
-        assert 'min_players' in game
-        assert 'max_players' in game
+        assert game['id'] is not None
+        assert game['name'] is not None
+        assert game['type'] is not None
 
 def test_create_session(client):
     # Test for TC-GN-API-007: Create Game Session Endpoint
     response = client.post('/api/games/sessions', json={
+        "name": "Magic 8 Ball",
         "game_type": "fortune_telling",
         "players": ["Alice"]
     })
@@ -36,6 +36,7 @@ def test_create_session(client):
 
     assert response.status_code == 201
     assert data['session_id'] is not None
+    assert data['game_name'] == "Magic 8 Ball"
     assert data['game_type'] == "fortune_telling"
     assert "Alice" in data['players']
     assert data['is_active'] is True
@@ -52,6 +53,7 @@ def test_get_session(client):
     # Test for TC-GN-API-008: Get Game Session Endpoint
     # Create Game Session
     response = client.post('/api/games/sessions', json={
+        "name": "Magic 8 Ball",
         "game_type": "fortune_telling",
         "players": ["Alice"]
     })
@@ -80,6 +82,7 @@ def test_make_move(client):
     # Test for TC-GN-API-009: Make Move Endpoint
     # Create Game Session
     response = client.post('/api/games/sessions', json={
+        "name": "Magic 8 Ball",
         "game_type": "fortune_telling",
         "players": ["Alice"]
     })
@@ -88,27 +91,27 @@ def test_make_move(client):
 
     # Make Move
     response = client.post(f'/api/games/sessions/{session_id}/moves', json={
-        "player": "Alice",
-        "move": "question"
+        "move": {"question": "Will I win the lottery?"}
     })
     data = response.get_json()
 
     assert response.status_code == 201
-    assert data['player'] == "Alice"
-    assert data['move'] == "question"
     assert data['session_id'] == session_id
+    assert data['state'] == {"question": "Will I win the lottery?"}
+    assert data['is_active'] is True
 
 def test_make_move_invalid_data(client):
     # Test for TC-GN-API-009: Handle Invalid Move Data
     # Create Game Session
     response = client.post('/api/games/sessions', json={
+        "name": "Magic 8 Ball",
         "game_type": "fortune_telling",
         "players": ["Alice"]
     })
     data = response.get_json()
     session_id = data['session_id']
 
-    # Make Move with Invalid Data
+    # Make a move with invalid data
     response = client.post(f'/api/games/sessions/{session_id}/moves', json={})
     data = response.get_json()
 
