@@ -4,6 +4,7 @@ import app.services.game_service as GameService
 
 @pytest.fixture
 def game_service():
+    # Initialize the GameService
     game_service = GameService.GameService()
     return game_service
 

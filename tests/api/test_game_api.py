@@ -118,3 +118,26 @@ def test_make_move_invalid_data(client):
     assert response.status_code == 400
     assert 'error' in data
 
+def test_end_game_session(client):
+    # Test for TC-GN-API-010: End Game Session Endpoint
+    # Create Game Session
+    response = client.post('/api/games/sessions', json={
+        "name": "Magic 8 Ball",
+        "game_type": "fortune_telling",
+        "players": ["Alice"],
+        "move": {"question": "Will I win the lottery?"}
+    })
+    data = response.get_json()
+    session_id = data['session_id']
+
+    # End Game Session
+    response = client.post(f'/api/games/sessions/{session_id}/end', json={
+        "result": "mostly positive"
+    })
+    data = response.get_json()
+
+    assert response.status_code == 200
+    assert data['session_id'] == session_id
+    assert data['is_active'] is False
+    assert data['is_completed'] is True
+    assert data['result'] == "mostly positive"
