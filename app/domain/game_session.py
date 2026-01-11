@@ -24,8 +24,9 @@ class GameSession:
         self.result = result
 
     def update_state(self, new_state: dict):
-        # Update the game session state
-        self.state.update(new_state)
+        # Update state by move that someone makes depending on game type
+        self.state = new_state
+        return self.to_dict()
     
     def to_dict(self) -> dict:
         # Convert the GameSession instance to a dictionary

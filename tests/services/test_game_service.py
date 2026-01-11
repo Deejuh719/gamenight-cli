@@ -4,6 +4,7 @@ import app.services.game_service as GameService
 
 @pytest.fixture
 def game_service():
+    # Initialize the GameService
     game_service = GameService.GameService()
     return game_service
 
@@ -12,18 +13,16 @@ def test_list_available_games(game_service):
     games = game_service.list_available_games()
 
     assert len(games) == 7
-    assert "Magic 8 Ball" in games
-    assert "Blackjack" in games
-    assert "Hangman" in games
-    assert "Bagels" in games
-    assert "Vigenere Cipher" in games
-    assert "Quick Draw" in games
-    assert "Terminal Hacker" in games
+    for game in games:
+        assert game["id"] is not None
+        assert game["name"] is not None
+        assert game["type"] is not None
 
 def test_create_game_session(game_service):
     # Create a game session
     session = game_service.create_game_session(
         game_name="Magic 8 Ball",
+        game_type="fortune_telling",
         players=["Alice"]
     )
     # Verify that the session is created correctly
@@ -37,17 +36,18 @@ def test_get_session_by_id(game_service):
     # Create a game session
     session = game_service.create_game_session(
         game_name="Hangman",
+        game_type="guessing",
         players=["Bob"]
     )
     session_id = session["session_id"]
     # Retrieve the session by ID
     retrieved_session = game_service.get_session_by_id(session_id)
     # Verify that the session is retrieved correctly
+    assert retrieved_session is not None
     assert retrieved_session["session_id"] == session_id
     assert retrieved_session["game_name"] == "Hangman"
     assert retrieved_session["players"] == ["Bob"]
     assert retrieved_session["is_active"] is True
-    assert retrieved_session is not None
 
 def test_get_nonexistent_session(game_service):
     # Attempt to retrieve a non-existent session
@@ -59,6 +59,7 @@ def test_make_move_updates_state(game_service):
     # Create a game session
     session = game_service.create_game_session(
         game_name="Hangman",
+        game_type="guessing",
         players=["Charlie"]
     )
     session_id = session["session_id"]
@@ -68,7 +69,7 @@ def test_make_move_updates_state(game_service):
     updated_session = game_service.get_session_by_id(session_id)
     # Verify that the state is updated correctly
     assert "guessed_letter" in updated_session["state"]
-    assert updated_session["state"]["guessed_letter"] == "e"
+    assert updated_session["state"] == {"guessed_letter": "e"}
 
 def test_make_move_on_nonexistent_session(game_service):
     # Attempt to make a move on a non-existent session
@@ -80,6 +81,7 @@ def test_end_game_session(game_service):
     # Create a game session
     session = game_service.create_game_session(
         game_name="Bagels",
+        game_type="guessing",
         players=["Dana"]
     )
     session_id = session["session_id"]

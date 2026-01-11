@@ -67,7 +67,7 @@ Each test case includes:
 - **Expected Results:**
     1. A local server is created at `http://127.0.0.1:5000/` without a 404 error or crashing
 
-### TC-GN-API-001: List Games Endpoint
+### TC-GN-API-006: List Games Endpoint
 
 - **Description:** Verify that the `/api/games` endpoint returns a list of games.
 - **Test Type:** Manual
@@ -80,6 +80,48 @@ Each test case includes:
 - **Expected Results:**
     1. The response status code is 200
     2. The JSON response body is a list of games
+
+### TC-GN-API-007: Create Game Session Endpoint
+
+- **Description:** Verify that the `/api/games` endpoint creates a new game session at endpoint `/api/games/sessions`.
+- **Test Type:** Automated
+- **Preconditions:**
+    1. Flask app is running
+- **Test Steps:**
+    1. Send a POST request to `/api/games/sessions` with a valid game ID
+    2. Observe the response status code
+    3. Observe the JSON response body
+- **Expected Results:**
+    1. The response status code is 200
+    2. The JSON response body is the game session ID
+
+### TC-GN-API-008: Get Game Session Endpoint
+
+- **Description:** Verify that the `/api/games/sessions/{session_id}` endpoint returns a game session.
+- **Test Type:** Automated
+- **Preconditions:**
+    1. Flask app is running
+- **Test Steps:**
+    1. Send a GET request to `/api/games/sessions/{session_id}`
+    2. Observe the response status code
+    3. Observe the JSON response body
+- **Expected Results:**
+    1. The response status code is 200
+    2. The JSON response body is the game session
+
+### TC-GN-API-009: Make Moves in Session
+
+- **Description:** Verify that the `/api/games/sessions/{session_id}/moves` endpoint makes moves in a game session.
+- **Test Type:** Automated
+- **Preconditions:**
+    1. Flask app is running
+- **Test Steps:**
+    1. Send a POST request to `/api/games/sessions/{session_id}/moves` with a valid move
+    2. Observe the response status code
+    3. Observe the JSON response body
+- **Expected Results:**
+    1. The response status code is 200
+    2. The JSON response body is the updated game session
 
 ## Domain Layer Testing
 
