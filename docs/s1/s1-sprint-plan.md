@@ -11,8 +11,8 @@ This project is focusing on a major refactor of my existing "Gamenight" app that
 Establish the foundation for the Game Night web app by creating a service layer, Flask API, and web UI from exsiting game logic. As well as implementing automated testing with CI/CD.
 
 ## Sprint Duration
-- Approximately 12-15 hours spread over 2-3 days
-- Start Date: 01/01/2026
+- Approximately 3-4 weeks
+- Start Date: 01/31/2026
 - End Date: __ /__ /__
 
 ## Team

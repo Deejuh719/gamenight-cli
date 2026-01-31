@@ -15,7 +15,7 @@ This plan will outline automated and manual testing strategies used during the s
 ## Sprint Information
 
 - **Sprint:** 1
-- **Start Date:** 01/01/2026
+- **Start Date:** 01/31/2026
 - **End Date:** MM/DD/YYYY
 - **Prepared by:** [K Surratt](https://github.com/deejuh719)
 - **Last Updated:** 01/01/2026
