@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% block title %} Game Selection {% endblock %}
+{% block content %}
+<div class="center middle">    
+    <h1>Choose Your Game:</h1>
+    {% for game in games %}
+    <a href="{{ url_for('game', game_id=game.id) }}" class="button">{{ game.name }}</a>
+    {% endfor %}
+</div>
+{% endblock %}
