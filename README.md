@@ -1,114 +1,29 @@
-### Vigenere Cipher (04.2024)
+# Game Night CLI/Flask App
 
-#### (named vignere_cypher.py)
+This project began over a year ago to develop Python development skills and push my own limits. As time passed, I began to impliment lessons learned via classes and self-study to improve upon the gaming metrics. Now, having had approximately 2 years of schooling and further programming under my belt, I sought out to develop the game into a web app that I could be proud of. I had attempted, previously, to acheive the same goals with PyQT and Tkinter and later Django, however, I have now settled on Flask as my method of building.
 
-1. A program to learn string manipulation from [FreeCodeCamp](https://www.freecodecamp.org/learn/scientific-computing-with-python/learn-list-comprehension-by-building-a-vigenere-cipher/step-1)
-2. Takes a string and a key and returns a string of the encrypted text or vice versa
-3. Cipher is currently buggy and will play with it to allow user input as well as encryption/decryption correctly in both directions (04.12.2024)
+This project will now include skills garnered from my SQA class. I will refactor the original project (without fully tampering with any of the original files, via several working branches) into a functional Flask app complete with CI-pipeline testing, as well as `pytest`, `Selenium` and `Playwright` testing to show what I have learned thus far.
+This refactor will test my skill to follow sprint practices I studied in class, as well as learning how to refactor a project from base CLI to a fully realised web app.
 
-### Convert to Snake Case (04.2024)
+## By the end...
 
-1. A conversion program to learn about lists from [FreeCodeCamp](https://www.freecodecamp.org/learn/scientific-computing-with-python/learn-list-comprehension-by-building-a-case-converter-program/step-1)
-2. Takes a string of PascalCase or camelCase and converts it to snake_case and adds it to the list
-3. Modified main() and lines 28-32 to ask for user input, as well as introduce the program and print out examples of the program's output
-4. Commented out lines 2-10 are the long version of what lines 14-18 do
-5. Added a while loop to keep asking for user input, as well as a way to exit the program
+This app should be a fully realised web app that will be uploaded to a page that:
 
-### Bagels Game (06.26.2024)
+1. Allows a user to click/select a game from a list of games
+2. Shows users a leaderboard for each game on each game's page
+3. Allows for better display of games that isn't granted via the terminal
 
-1. This game is based on the code featured in the book "The Big Book of Small Python Projects".
-2. It's base code is available [here](https://inventwithpython.com/bigbookpython/project1.html)
-3. Alterations include:
-   - Instead of printing out "Pico" "Fermi" and "Bagels" it will print P, F, B and is noted in the instructions
-   - Included letters for a hexadecimal code option
-   - Instead of 3-digit combinations, it's 4, and guess count is 20 (may up later)
-   - Line 51 upper-cases the guess and the solution so that it can match and allow for a correct guess
-   - Line 39 utilizes regex for comparing guesses
-   - Lines 43-45 for quitting out without using CTRL+Z
+As well as updating certain features of other games (i.e. making the "Terminal Hacker" game more interactive and similar to the FallOut inspiration it is drawn from, possibly adding multiplayer to certain games, etc.)
 
-### Birthday Paradox (06.27.2024)
+### Sprint Count:
 
-1. This game is based on the code featured in the book "The Big Book of Small Python Projects".
-2. It's base code is available [here](https://inventwithpython.com/bigbookpython/project2.html)
-3. Alterations include:
-   - Lines 99-112, allowing for multiple response options to print based on probability
-   - Added match_count on lines 66, 70-71 for if a match in the birthday sim occurs
-   - Edited print line on 78 to state that at least 1 person has a birthday on x-date
-   - startOfYear begins in 1980 instead of 2001 because of bias
-4. Was going to alter the amount of birthdays that can be matched or the amount of times the simulation is run, but that caused extreme latency on the runtime
+4 sprints total
+Attempt to complete within 2 weeks (i.e. 2 sprints per week)
 
-### Vigenere Cipher (But Better) (06.27.2024)
+### Project Sprint Start Date:
 
-#### (named vignerecipher.py)
+01/01/2026
 
-1. Fully functional cipher that actually encrypts and decrypts based on user input
-2. From "The Big Book of Small Python Projects", base code [here](https://inventwithpython.com/bigbookpython/project80.html)
-3. Only thing I changed about this code was the title/intro to the cipher
-4. Will use as an example to edit the first cipher from FreeCodeCamp
+### Actual Sprint Start Date:
 
-### Magic 8 Ball (07.12.2024)
-
-1. Code built from scratch using guidance only from previous projects
-2. Utilizes the random.randint() method to generate a random number between 1 and 20 correlating to the orignal 20 responses of a magic 8 ball
-3. Requires user input for a question and prints out a random response, will continue to do so until user inputs "quit"
-4. Will potentially add a way to save the responses to a text file in the future as well as change into an HTML format so that it can be viewed on a webpage
-
-### Magic 8 Ball (07.17.2024 - 07.22.2024)
-
-1. Created from python base of 8-ball game
-2. Utlized py-script in HTML so that it can be used on a web page (still learning how to use this method, learned for school project briefly and taught self from there)
-3. Doesn't require an input to work, but is useful
-4. Will possibly add a way to save responses later
-
-### Hangman (07.22.2024 - 07.23.2024)
-
-1. Built a python version of hangman with guidance from [realpython.com](https://realpython.com/python-hangman/)
-2. Utilizes a word list (words.txt) to randomly select a word for the game
-3. Requires user input to guess a letter, will print out the word with guessed letters in place of underscores
-4. Minor deviations from guided code include:
-   - Line 2 = importing time and its uses on lines 148, 176, 187, & 190
-   - Lines 154 - 157 = includes amount of incorrect guesses out of max as well as multiline text for the introduction
-   - Lines 173 - 180 & 184-191 = asks user if they would like to play again or not, allowing to loop through the game without having to restart the program
-   - Lines 140 & 194 = calls the game loop as a function so that it can be called again in the "play again" loop
-5. Other insignificant changes such as phrasing and spacing
-6. Will potentially add a tally of games won to games lost
-
-   ### (07.29.2024)
-
-   1. Updated word list to include other words and removed a few that are more difficult/niche
-   2. Turned word list into a tuple to include difficulty and category
-   3. Created a new function to generate a random word from the tuple
-   4. Allows the user to pick difficulty (easy, medium, hard)
-   5. Displays the word's category after word is picked
-
-### Blackjack (08.12.2024)
-
-1. Built a python version of blackjack with guidance from [Big Book of Small Python Projects](https://inventwithpython.com/bigbookpython/project4.html)
-2. Utilizes tuples to generate the deck of cards.
-3. Requires user input for betting, deciding to hit or stand, and quitting.
-4. Minor deviations from guided code include:
-   - Line 27 gives a smaller bet than the suggested 5000
-   - Lines 121-124 allows for an "All in" bet
-   - Lines 212 and 224 allow for a quit option while decidingg to hit or stand
-   - Minor tweaks to print statements and some time.sleep() functions
-5. Planning to impliment a "player won" and "player lost" function to keep track of wins and losses in either money or hands (or both)
-
-### GameNight (08.12.2024)
-
-1. Implimented a way to show off the collection of python games I've been building in one location
-2. Uses a list of games that are imported and allow the user to select which one to play
-3. When games are over, or if user wishes to quit, the game will return to the main menu
-4. Quitting from the main menu will exit the program entirely
-5. Will add more games as they are created
-6. Planning on creating a way to keep track of wins and losses for each game
-
-   ### (08.13.2024) -
-
-   1. Updated games included in "Game Night Package"
-   2. Updated blackjack game to include proper bet doubling as well as splitting for same value cards
-   3. Updated bagels game to allow player to choose between using letters only (A-Z), numbers only (0-9), or both (A-F&1-5) to allow for different levels of challenge as well as proper error messages for each game choice
-
-12/30/25 -
-1. Refactor game to be a Flask app
-2. Add CI pipeline testing
-3. Add pytest, selenium, and playwright testing
+01/31/2026
