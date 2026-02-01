@@ -151,7 +151,7 @@ Each test case includes:
 - **Expected Results:**
     1. The `is_valid` method returns `False`
 
-## TC-GN-DL-003: GameSession Initialization
+### TC-GN-DL-003: GameSession Initialization
 
 - **Description:** Verify GameSession is initialized correctly.
 - **Test Type:** Automated

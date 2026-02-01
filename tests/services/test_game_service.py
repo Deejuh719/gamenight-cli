@@ -1,95 +1,54 @@
 # tests/services/test_game_service.py
 import pytest
-import app.services.game_service as GameService
+from app.services.game_service import GameService
+from app.domain.game_session import GameSession
 
+"""
+Focuses on tests GN-SRV-001 and GN-SRV-002
+Assuring that GameService will list available games
+and create new game sessions correctly.
+"""
 @pytest.fixture
 def game_service():
-    # Initialize the GameService
-    game_service = GameService.GameService()
-    return game_service
+    return GameService()
 
 def test_list_available_games(game_service):
-    # Should list all available games (currently 7)
-    games = game_service.list_available_games()
-
-    assert len(games) == 7
-    for game in games:
-        assert game["id"] is not None
-        assert game["name"] is not None
-        assert game["type"] is not None
+    available_games = game_service.list_available_games()
+    assert isinstance(available_games, list)
+    assert len(available_games) > 0
+    assert available_games[0]["name"] == "Magic 8 Ball"
+    assert available_games[1]["name"] == "Blackjack"
+    assert available_games[2]["name"] == "Hangman"
 
 def test_create_game_session(game_service):
-    # Create a game session
-    session = game_service.create_game_session(
-        game_name="Magic 8 Ball",
-        game_type="fortune_telling",
-        players=["Alice"]
-    )
-    # Verify that the session is created correctly
-    assert session["game_name"] == "Magic 8 Ball"
-    assert session["players"] == ["Alice"]
-    assert session["is_active"] is True
-    assert session["session_id"] is not None
-    assert session is not None
+    game_session = game_service.create_game_session("Hangman")
+    assert isinstance(game_session, GameSession)
+    assert game_session.name == "Hangman"
+    assert game_session.status == "active"
+    assert game_session.state == {}
 
-def test_get_session_by_id(game_service):
-    # Create a game session
-    session = game_service.create_game_session(
-        game_name="Hangman",
-        game_type="guessing",
-        players=["Bob"]
-    )
-    session_id = session["session_id"]
-    # Retrieve the session by ID
-    retrieved_session = game_service.get_session_by_id(session_id)
-    # Verify that the session is retrieved correctly
-    assert retrieved_session is not None
-    assert retrieved_session["session_id"] == session_id
-    assert retrieved_session["game_name"] == "Hangman"
-    assert retrieved_session["players"] == ["Bob"]
-    assert retrieved_session["is_active"] is True
 
-def test_get_nonexistent_session(game_service):
-    # Attempt to retrieve a non-existent session
-    session = game_service.get_session_by_id("nonexistent-session-id")
-    # Verify that None is returned
-    assert session is None
+def test_get_game_session_by_id(game_service):
+    game_session = game_service.create_game_session("Hangman")
+    retrieved_game_session = game_service.get_game_session_by_id(game_session.id)
+    assert retrieved_game_session == game_session
 
-def test_make_move_updates_state(game_service):
-    # Create a game session
-    session = game_service.create_game_session(
-        game_name="Hangman",
-        game_type="guessing",
-        players=["Charlie"]
-    )
-    session_id = session["session_id"]
-    # Make a move in the game session
-    game_service.make_move(session_id, {"guessed_letter": "e"})
-    # Retrieve the updated session
-    updated_session = game_service.get_session_by_id(session_id)
-    # Verify that the state is updated correctly
-    assert "guessed_letter" in updated_session["state"]
-    assert updated_session["state"] == {"guessed_letter": "e"}
+def test_get_game_session_by_invalid_id(game_service):
+    retrieved_game_session = game_service.get_game_session_by_id("non-existent-id")
+    assert retrieved_game_session is None
 
-def test_make_move_on_nonexistent_session(game_service):
-    # Attempt to make a move on a non-existent session
-    result = game_service.make_move("nonexistent-session-id", {"guessed_letter": "e"})
-    # Verify that None is returned
-    assert result is None
+def test_multiple_game_sessions(game_service):
+    game_session1 = game_service.create_game_session("Hangman")
+    game_session2 = game_service.create_game_session("Blackjack")
+    assert game_session1.id != game_session2.id
 
-def test_end_game_session(game_service):
-    # Create a game session
-    session = game_service.create_game_session(
-        game_name="Bagels",
-        game_type="guessing",
-        players=["Dana"]
-    )
-    session_id = session["session_id"]
-    # End the game session with a result
-    game_service.end_game_session(session_id, result="quit")
-    # Retrieve the ended session
-    ended_session = game_service.get_session_by_id(session_id)
-    # Verify that the session is marked as completed
-    assert ended_session["is_completed"] is True
-    assert ended_session["is_active"] is False
-    assert ended_session["result"] == "quit"
+def test_game_move_updates_state(game_service):
+    game_session = game_service.create_game_session("Hangman")
+    game_service.game_move(game_session.id, {"guess": "a"})
+    assert game_session.state == {"guess": "a"}
+    game_service.game_move(game_session.id, {"guess": "b"})
+    assert game_session.state == {"guess": "b"}
+
+def test_game_move_invalid_session(game_service):
+    with pytest.raises(KeyError):
+        game_service.game_move("non-existent-id", {"guess": "a"})

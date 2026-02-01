@@ -1,41 +1,91 @@
 # tests/domain/test_game.py
-# Tests for TC-GN-DL-001, 002
 import pytest
 from app.domain.game import Game
 
-def test_game_creation_with_valid_data():
-    # Create a Game instance with valid data
-    game = Game(name="Magic 8 Ball", game_type="fortune_telling", min_players=1, max_players=1)
-
-    # Verify that the Game instance is created correctly
+"""
+Covers TC-GN-DL-001 and TC-GN-DL-002 for initialization 
+    of Game Model with valid data.
+"""
+def test_game_initialization_with_valid_data():
+    # Assure that a Game object is correctly initialized with valid data
+    game = Game(
+        id=1,
+        name="Magic 8 Ball",
+        game_type="Single Player",
+        min_players=1,
+        max_players=1,
+    )
+    assert game.id == 1
     assert game.name == "Magic 8 Ball"
-    assert game.game_type == "fortune_telling"
     assert game.min_players == 1
     assert game.max_players == 1
+    assert game.game_type == "Single Player"
+    assert game.is_valid()
 
 def test_game_requires_name():
-    # Attempt to create a Game instance without a name
-    with pytest.raises(ValueError) as excinfo:
-        Game(name="", game_type="fortune_telling", min_players=1, max_players=1)
-    # Check that the appropriate exception is raised
-    assert "Game name is required" in str(excinfo.value)
+    with pytest.raises(ValueError):
+        Game(
+            id=1,
+            name="",
+            game_type="Single Player",
+            min_players=1,
+            max_players=1,
+        )
 
-def test_game_requires_type():
-    # Attempt to create a Game instance without a game type
-    with pytest.raises(ValueError) as excinfo:
-        Game(name="Magic 8 Ball", game_type="", min_players=1, max_players=1)
-    # Check that the appropriate exception is raised
-    assert "Game type is required" in str(excinfo.value)
+def test_game_requires_game_type():
+    with pytest.raises(ValueError):
+        Game(
+            id=1,
+            name="Magic 8 Ball",
+            game_type="",
+            min_players=1,
+            max_players=1,
+        )
 
-def test_game_to_dict():
-    # Create a Game instance and convert it to a dictionary
-    game = Game(name="Magic 8 Ball", game_type="fortune_telling", min_players=1, max_players=1)
-    # Create the expected dictionary representation
+def test_game_min_players_at_least_one():
+    with pytest.raises(ValueError):
+        Game(
+            id=1,
+            name="Magic 8 Ball",
+            game_type="Single Player",
+            min_players=0,
+            max_players=1,
+        )
+
+def test_game_max_players_not_less_than_min_players():
+    with pytest.raises(ValueError):
+        Game(
+            id=1,
+            name="Magic 8 Ball",
+            game_type="Single Player",
+            min_players=2,
+            max_players=1,
+        )
+
+def test_game_id_not_negative():
+    with pytest.raises(ValueError):
+        Game(
+            id=-1,
+            name="Magic 8 Ball",
+            game_type="Single Player",
+            min_players=1,
+            max_players=1,
+        )
+
+def test_return_dict():
+    game = Game(
+        id=1,
+        name="Magic 8 Ball",
+        game_type="Single Player",
+        min_players=1,
+        max_players=1,
+    )
+    game_dict = game.return_dict()
     expected_dict = {
+        "id": 1,
         "name": "Magic 8 Ball",
-        "game_type": "fortune_telling",
+        "game_type": "Single Player",
         "min_players": 1,
-        "max_players": 1
+        "max_players": 1,
     }
-    # Verify that the to_dict method returns the expected dictionary
-    assert game.to_dict() == expected_dict
+    assert game_dict == expected_dict

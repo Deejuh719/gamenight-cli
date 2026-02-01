@@ -1,44 +1,22 @@
 # app/domain/game_session.py
 import uuid
-from datetime import datetime
 
 class GameSession:
-    # Initialize a GameSession instance
-    def __init__(self, game_name: str, game_type: str, players: list):
-        self.game_name = game_name
-        self.game_type = game_type
-        self.players = players
-        self.is_active = True
-        self.is_completed = False
-        self.session_id = str(uuid.uuid4())
-        self.start_time = datetime.now()
-        self.end_time = None
+    def __init__(self):
+        self.id = str(uuid.uuid4())
+        self.name = ""
+        self.players = []
+        self.status = "active"
         self.state = {}
-        self.result = None
-    
-    def mark_completed(self, result: str):
-        # Mark the game session as completed (win, loss, quit)
-        self.is_completed = True
-        self.is_active = False
-        self.end_time = datetime.now()
-        self.result = result
 
-    def update_state(self, new_state: dict):
-        # Update state by move that someone makes depending on game type
-        self.state = new_state
-        return self.to_dict()
-    
-    def to_dict(self) -> dict:
-        # Convert the GameSession instance to a dictionary
+    def update_state(self, new_state):
+        self.state.update(new_state)
+
+    def to_dict(self):
         return {
-            "game_name": self.game_name,
-            "game_type": self.game_type,
+            "id": self.id,
+            "name": self.name,
             "players": self.players,
-            "is_active": self.is_active,
-            "is_completed": self.is_completed,
-            "session_id": self.session_id,
-            "start_time": self.start_time.isoformat(),
-            "end_time": self.end_time.isoformat() if self.end_time else None,
+            "status": self.status,
             "state": self.state,
-            "result": self.result
         }
